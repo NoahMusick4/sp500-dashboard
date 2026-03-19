@@ -12,7 +12,7 @@ GREEN   = "#00e676"
 RED     = "#ff5252"
 
 def plot_static(summary, output_path="../outputs/charts/sector_performance.png"):
-    fig, axes = plt.subplots(1, 3, figsize=(18, 7))
+    fig, axes = plt.subplots(1, 3, figsize=(22, 8))
     fig.patch.set_facecolor(DARK_BG)
     periods = ["1M (%)", "3M (%)", "YTD (%)"]
     titles  = ["1 Month Return", "3 Month Return", "Year-to-Date Return"]
@@ -20,23 +20,25 @@ def plot_static(summary, output_path="../outputs/charts/sector_performance.png")
     for ax, period, title in zip(axes, periods, titles):
         df_sorted = summary.sort_values(period, ascending=True)
         colors = [GREEN if v >= 0 else RED for v in df_sorted[period]]
-        bars = ax.barh(df_sorted["Sector"], df_sorted[period], color=colors, edgecolor="none", height=0.65)
+        bars = ax.barh(df_sorted["Sector"], df_sorted[period], color=colors, edgecolor="none", height=0.55)
 
         for bar, val in zip(bars, df_sorted[period]):
-            x_pos = val + 0.2 if val >= 0 else val - 0.2
+            x_pos = val + 0.3 if val >= 0 else val - 0.3
             ha = "left" if val >= 0 else "right"
             ax.text(x_pos, bar.get_y() + bar.get_height() / 2,
                     f"{val:+.1f}%", va="center", ha=ha,
-                    color="white", fontsize=8.5, fontweight="bold")
+                    color="white", fontsize=8, fontweight="bold")
 
         ax.axvline(0, color="white", linewidth=0.8, alpha=0.4)
         ax.set_title(title, color="white", fontsize=13, fontweight="bold", pad=12)
         ax.set_facecolor(DARK_BG)
         ax.tick_params(colors="white", labelsize=9)
         ax.spines[:].set_visible(False)
+        ax.set_xlim(df_sorted[period].min() * 1.4, df_sorted[period].max() * 1.4)
+        ax.yaxis.set_tick_params(pad=8)
 
     fig.suptitle("S&P 500 Sector Performance Dashboard", color="white", fontsize=16, fontweight="bold", y=1.01)
-    plt.tight_layout()
+    plt.tight_layout(pad=2.0)
     plt.savefig(output_path, dpi=150, bbox_inches="tight", facecolor=DARK_BG)
     print(f"💾 Static chart saved to {output_path}")
     plt.show()
