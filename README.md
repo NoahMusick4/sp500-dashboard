@@ -123,6 +123,6 @@ jupyter notebook notebooks/01_exploration.ipynb
 
 ## Authors
 
-Built by Noah Musick — Finance & Data Science student at Capital University.
+Noah Musick — Finance Major, Data Science Minor @ Capital University
 
 [Connect on LinkedIn](https://www.linkedin.com/in/noah-musick-674ba4332) | [View more projects on GitHub](https://github.com/NoahMusick4)
